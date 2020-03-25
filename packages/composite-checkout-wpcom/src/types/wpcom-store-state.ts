@@ -316,7 +316,35 @@ export function prepareDomainContactDetailsErrors(
 	};
 }
 
-export function prepareCaDomainContactExtraDetails(
+export function prepareTldExtraContactDetails(
+	details: ManagedContactDetails
+): {
+	ca: null | CaDomainContactExtraDetails;
+	uk: null | UkDomainContactExtraDetails;
+	fr: null | FrDomainContactExtraDetails;
+} {
+	return {
+		ca: prepareCaDomainContactExtraDetails( details ),
+		uk: prepareUkDomainContactExtraDetails( details ),
+		fr: prepareFrDomainContactExtraDetails( details ),
+	};
+}
+
+export function prepareTldExtraContactDetailsErrors(
+	details: ManagedContactDetails
+): {
+	ca: null | CaDomainContactExtraDetailsErrors;
+	uk: null | UkDomainContactExtraDetailsErrors;
+	fr: null | FrDomainContactExtraDetailsErrors;
+} {
+	return {
+		ca: prepareCaDomainContactExtraDetailsErrors( details ),
+		uk: prepareUkDomainContactExtraDetailsErrors( details ),
+		fr: prepareFrDomainContactExtraDetailsErrors( details ),
+	};
+}
+
+function prepareCaDomainContactExtraDetails(
 	details: ManagedContactDetails
 ): CaDomainContactExtraDetails | null {
 	if ( details.tldExtraFields?.ca ) {
@@ -330,7 +358,7 @@ export function prepareCaDomainContactExtraDetails(
 	return null;
 }
 
-export function prepareCaDomainContactExtraDetailsErrors(
+function prepareCaDomainContactExtraDetailsErrors(
 	details: ManagedContactDetails
 ): CaDomainContactExtraDetailsErrors | null {
 	if ( details.tldExtraFields?.ca ) {
@@ -344,7 +372,7 @@ export function prepareCaDomainContactExtraDetailsErrors(
 	return null;
 }
 
-export function prepareUkDomainContactExtraDetails(
+function prepareUkDomainContactExtraDetails(
 	details: ManagedContactDetails
 ): UkDomainContactExtraDetails | null {
 	if ( details.tldExtraFields?.uk ) {
@@ -357,7 +385,7 @@ export function prepareUkDomainContactExtraDetails(
 	return null;
 }
 
-export function prepareUkDomainContactExtraDetailsErrors(
+function prepareUkDomainContactExtraDetailsErrors(
 	details: ManagedContactDetails
 ): UkDomainContactExtraDetailsErrors | null {
 	if ( details.tldExtraFields?.uk ) {
@@ -370,7 +398,7 @@ export function prepareUkDomainContactExtraDetailsErrors(
 	return null;
 }
 
-export function prepareFrDomainContactExtraDetails(
+function prepareFrDomainContactExtraDetails(
 	details: ManagedContactDetails
 ): FrDomainContactExtraDetails | null {
 	if ( details.tldExtraFields?.fr ) {
@@ -384,7 +412,7 @@ export function prepareFrDomainContactExtraDetails(
 	return null;
 }
 
-export function prepareFrDomainContactExtraDetailsErrors(
+function prepareFrDomainContactExtraDetailsErrors(
 	details: ManagedContactDetails
 ): FrDomainContactExtraDetailsErrors | null {
 	if ( details.tldExtraFields?.fr ) {
