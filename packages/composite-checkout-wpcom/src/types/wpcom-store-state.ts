@@ -52,7 +52,7 @@ function liftManagedContactDetailsShape< A, B >(
     x: ManagedContactDetailsShape<A>,
     y: ManagedContactDetailsShape<B>
 ): ManagedContactDetailsShape<B> {
-    let tldExtraFields = {};
+    const tldExtraFields = {};
 
     if ( y.tldExtraFields?.ca ) {
         if ( x.tldExtraFields?.ca ) {
@@ -146,7 +146,7 @@ function flattenManagedContactDetailsShape< A, B >(
             f( x.tldExtraFields.uk.tradingName ),
         ] : [];
 
-    const frValues = ( details.tldExtraFields && details.tldExtraFields.fr )
+    const frValues = ( x.tldExtraFields && x.tldExtraFields.fr )
         ? [
             f( x.tldExtraFields.fr.registrantType ),
             f( x.tldExtraFields.fr.trademarkNumber ),
