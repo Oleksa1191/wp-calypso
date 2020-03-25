@@ -8,7 +8,7 @@ export function useHasDomainsInCart() {
 	return areDomainsInLineItems( items );
 }
 
-export function getDomainNamesInCart() {
+export function useDomainNamesInCart() {
 	const [ items ] = useLineItems();
 	const rawDomainNames = items.filter( isLineItemADomain ).map( item => item.wpcom_meta?.meta );
 	return [ ...new Set( rawDomainNames ) ];
