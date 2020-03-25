@@ -41,12 +41,14 @@ export type DomainContactDetailsErrors = {
 
 export type CaDomainContactExtraDetails = {
 	lang: string;
+	organization: string;
 	legal_type: string;
 	cira_agreement_accepted: boolean;
 };
 
 export type CaDomainContactExtraDetailsErrors = {
 	lang?: string;
+	organization?: string;
 	legal_type?: string;
 	cira_agreement_accepted?: string;
 };
