@@ -1,3 +1,8 @@
+/**
+ * Internal dependencies
+ */
+import { DomainContactDetails, DomainContactDetailsErrors } from './backend/domain-contact-details-components';
+
 /*
  * All child components in composite checkout are controlled -- they accept
  * data from their parents and evaluate callbacks when edited, rather than
@@ -133,43 +138,6 @@ function setManagedContactDetailsErrors(
 		vatId: setErrors( errors.vatId, details.vatId ),
 	};
 }
-
-/*
- * The data model used in the ContactDetailsFormFields component.
- * This belongs in components/domains/contact-details-form-fields, but until
- * that component is rewritten in TypeScript we'll put it here.
- */
-export type DomainContactDetails = {
-	firstName: string;
-	lastName: string;
-	organization: string;
-	email: string;
-	alternateEmail: string;
-	phone: string;
-	address1: string;
-	address2: string;
-	city: string;
-	state: string;
-	postalCode: string;
-	countryCode: string;
-	fax: string;
-};
-
-export type DomainContactDetailsErrors = {
-	firstName?: string;
-	lastName?: string;
-	organization?: string;
-	email?: string;
-	alternateEmail?: string;
-	phone?: string;
-	address1?: string;
-	address2?: string;
-	city?: string;
-	state?: string;
-	postalCode?: string;
-	countryCode?: string;
-	fax?: string;
-};
 
 /*
  * Convert a ManagedContactDetails object (used internally by the
