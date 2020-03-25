@@ -67,12 +67,14 @@ export type UkDomainContactExtraDetailsErrors = {
 
 export type FrDomainContactExtraDetails = {
 	registrant_type: string;
+	registrant_vat_id: string;
 	trademark_number: string;
 	siren_sirat: string;
 };
 
 export type FrDomainContactExtraDetailsErrors = {
 	registrant_type?: string;
+	registrant_vat_id?: string;
 	trademark_number?: string;
 	siren_sirat?: string;
 };
