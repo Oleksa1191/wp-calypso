@@ -8,6 +8,12 @@ export function useHasDomainsInCart() {
 	return areDomainsInLineItems( items );
 }
 
+export function getDomainNamesInCart() {
+	const [ items ] = useLineItems();
+	const rawDomainNames = items.filter( isLineItemADomain ).map( item => item.wpcom_meta?.meta );
+	return [ ...new Set( rawDomainNames ) ];
+}
+
 export function areDomainsInLineItems( items ) {
 	if ( items.find( isLineItemADomain ) ) {
 		return true;
