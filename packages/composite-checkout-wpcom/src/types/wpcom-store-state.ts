@@ -28,31 +28,33 @@ type ManagedContactDetailsShape<T> = {
     countryCode: T;
     fax: T;
     vatId: T;
-    tldExtraFields: {
-        ca?: {
-            lang: T;
-            legalType: T;
-            ciraAgreementAccepted: T;
-        };
-        uk?: {
-            registrantType: T;
-            registrationNumber: T;
-            tradingName: T;
-        };
-        fr?: {
-            registrantType: T;
-            trademarkNumber: T;
-            sirenSirat: T;
-        };
-    }
+    tldExtraFields: ManagedContactDetailsTldExtraFields<T>;
 };
+
+type ManagedContactDetailsTldExtraFields<T> = {
+    ca?: {
+        lang: T;
+        legalType: T;
+        ciraAgreementAccepted: T;
+    };
+    uk?: {
+        registrantType: T;
+        registrationNumber: T;
+        tradingName: T;
+    };
+    fr?: {
+        registrantType: T;
+        trademarkNumber: T;
+        sirenSirat: T;
+    };
+}
 
 function liftManagedContactDetailsShape< A, B >(
     f: (A, B) => B,
     x: ManagedContactDetailsShape<A>,
     y: ManagedContactDetailsShape<B>
 ): ManagedContactDetailsShape<B> {
-    const tldExtraFields = {};
+    const tldExtraFields: ManagedContactDetailsTldExtraFields<B> = {};
 
     if ( y.tldExtraFields?.ca ) {
         if ( x.tldExtraFields?.ca ) {
@@ -304,10 +306,11 @@ export function prepareCaDomainContactExtraDetails(
         return {
             lang: details.tldExtraFields.ca.lang.value,
             organization: details.organization.value,
-            legalType: details.tldExtraFields.ca.legalType.value,
-            ciraAgreementAccepted: details.tldExtraFields.ca.ciraAgreementAccepted.value,
+            legal_type: details.tldExtraFields.ca.legalType.value,
+            cira_agreement_accepted: details.tldExtraFields.ca.ciraAgreementAccepted.value === 'true',
         };
     }
+    return null;
 }
 
 export function prepareCaDomainContactExtraDetailsErrors(
@@ -317,10 +320,11 @@ export function prepareCaDomainContactExtraDetailsErrors(
         return {
             lang: details.tldExtraFields.ca.lang.errors[ 0 ],
             organization: details.organization.errors[ 0 ],
-            legalType: details.tldExtraFields.ca.legalType.errors[ 0 ],
-            ciraAgreementAccepted: details.tldExtraFields.ca.ciraAgreementAccepted.errors[ 0 ],
+            legal_type: details.tldExtraFields.ca.legalType.errors[ 0 ],
+            cira_agreement_accepted: details.tldExtraFields.ca.ciraAgreementAccepted.errors[ 0 ],
         };
     }
+    return null;
 }
 
 export function prepareUkDomainContactExtraDetails(
@@ -328,11 +332,12 @@ export function prepareUkDomainContactExtraDetails(
 ): UkDomainContactExtraDetails | null {
     if ( details.tldExtraFields?.uk ) {
         return {
-            registrantType: details.tldExtraFields.uk.registrantType.value,
-            registrationNumber: details.tldExtraFields.uk.registrationNumber.value,
-            tradingName: details.tldExtraFields.uk.tradingName.value,
+            registrant_type: details.tldExtraFields.uk.registrantType.value,
+            registration_number: details.tldExtraFields.uk.registrationNumber.value,
+            trading_name: details.tldExtraFields.uk.tradingName.value,
         };
     }
+    return null;
 }
 
 export function prepareUkDomainContactExtraDetailsErrors(
@@ -340,11 +345,12 @@ export function prepareUkDomainContactExtraDetailsErrors(
 ): UkDomainContactExtraDetailsErrors | null {
     if ( details.tldExtraFields?.uk ) {
         return {
-            registrantType: details.tldExtraFields.uk.registrantType.errors[ 0 ],
-            registrationNumber: details.tldExtraFields.uk.registrationNumber.errors[ 0 ],
-            tradingName: details.tldExtraFields.uk.tradingName.errors[ 0 ],
+            registrant_type: details.tldExtraFields.uk.registrantType.errors[ 0 ],
+            registration_number: details.tldExtraFields.uk.registrationNumber.errors[ 0 ],
+            trading_name: details.tldExtraFields.uk.tradingName.errors[ 0 ],
         };
     }
+    return null;
 }
 
 export function prepareFrDomainContactExtraDetails(
@@ -352,12 +358,13 @@ export function prepareFrDomainContactExtraDetails(
 ): FrDomainContactExtraDetails | null {
     if ( details.tldExtraFields?.fr ) {
         return {
-            registrantType: details.tldExtraFields.fr.registrantType.value,
-            registrantVatId: details.vatId.value,
-            trademarkNumber: details.tldExtraFields.fr.trademarkNumber.value,
-            sirenSirat: details.tldExtraFields.fr.sirenSirat.value,
+            registrant_type: details.tldExtraFields.fr.registrantType.value,
+            registrant_vat_id: details.vatId.value,
+            trademark_number: details.tldExtraFields.fr.trademarkNumber.value,
+            siren_sirat: details.tldExtraFields.fr.sirenSirat.value,
         };
     }
+    return null;
 }
 
 export function prepareFrDomainContactExtraDetailsErrors(
@@ -365,12 +372,13 @@ export function prepareFrDomainContactExtraDetailsErrors(
 ): FrDomainContactExtraDetailsErrors | null {
     if ( details.tldExtraFields?.fr ) {
         return {
-            registrantType: details.tldExtraFields.fr.registrantType.errors[ 0 ],
-            registrantVatId: details.vatId.errors[ 0 ],
-            trademarkNumber: details.tldExtraFields.fr.trademarkNumber.errors[ 0 ],
-            sirenSirat: details.tldExtraFields.fr.sirenSirat.errors[ 0 ],
+            registrant_type: details.tldExtraFields.fr.registrantType.errors[ 0 ],
+            registrant_vat_id: details.vatId.errors[ 0 ],
+            trademark_number: details.tldExtraFields.fr.trademarkNumber.errors[ 0 ],
+            siren_sirat: details.tldExtraFields.fr.sirenSirat.errors[ 0 ],
         };
     }
+    return null;
 }
 
 /*
