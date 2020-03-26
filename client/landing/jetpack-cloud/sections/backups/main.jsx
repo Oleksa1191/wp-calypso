@@ -104,9 +104,9 @@ class BackupsPage extends Component {
 					backupsOnSelectedDate.activities.push( log );
 				}
 			} );
-
-			this.setState( { backupsOnSelectedDate } );
 		}
+
+		this.setState( { backupsOnSelectedDate } );
 	};
 
 	isEmptyFilter = filter => {
