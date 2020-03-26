@@ -47,6 +47,11 @@ export const resetOnboardStore = () => ( {
 	type: 'RESET_ONBOARD_STORE' as const,
 } );
 
+export const setSelectedSite = ( selectedSite: string ) => ( {
+	type: 'SET_SELECTED_SITE' as const,
+	selectedSite,
+} );
+
 export const setSiteWasCreatedForDomainPurchase = (
 	siteWasCreatedForDomainPurchase: boolean
 ) => ( {
@@ -93,5 +98,6 @@ export type OnboardAction = ReturnType<
 	| typeof setSiteTitle
 	| typeof togglePageLayout
 	| typeof resetOnboardStore
+	| typeof setSelectedSite
 	| typeof setSiteWasCreatedForDomainPurchase
 >;

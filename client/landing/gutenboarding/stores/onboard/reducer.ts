@@ -67,6 +67,19 @@ const pageLayouts: Reducer< string[], OnboardAction > = ( state = [], action ) =
 	return state;
 };
 
+const selectedSite: Reducer< string | undefined, OnboardAction > = (
+	state = undefined,
+	action
+) => {
+	if ( action.type === 'SET_SELECTED_SITE' ) {
+		return action.selectedSite;
+	}
+	if ( action.type === 'RESET_ONBOARD_STORE' ) {
+		return undefined;
+	}
+	return state;
+};
+
 const siteWasCreatedForDomainPurchase: Reducer< boolean, OnboardAction > = (
 	state = false,
 	action
@@ -89,6 +102,7 @@ const reducer = combineReducers( {
 	siteTitle,
 	siteVertical,
 	pageLayouts,
+	selectedSite,
 	siteWasCreatedForDomainPurchase,
 } );
 

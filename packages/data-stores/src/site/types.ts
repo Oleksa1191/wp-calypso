@@ -43,3 +43,28 @@ export interface CreateSiteParams {
 		theme?: string;
 	};
 }
+
+export interface ExistingSiteDetails {
+	ID: number;
+	name: string;
+	description: string;
+	URL: string;
+}
+
+export interface ExistingSiteError {
+	error: string;
+	message: string;
+}
+
+export type ExistingSiteResponse = ExistingSiteDetails | ExistingSiteError;
+
+export type MetadataDispatch = {
+	invalidateResolution: (
+		selectorName: string,
+		args: Array< any >
+	) => { type: string; selectorName: string; args: any };
+};
+
+export type MetadataSelect = {
+	getIsResolving: ( selectorName: string, args: Array< any > ) => boolean | undefined;
+};

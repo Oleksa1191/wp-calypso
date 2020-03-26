@@ -29,6 +29,7 @@ registerStore< State >( STORE_KEY, {
 		'siteVertical',
 		'pageLayouts',
 		'selectedDesign',
+		'selectedSite',
 		'siteWasCreatedForDomainPurchase',
 	],
 } );
