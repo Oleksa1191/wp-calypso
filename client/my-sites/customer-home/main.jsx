@@ -283,6 +283,8 @@ const connectHome = connect(
 			dispatchProps.expandToolsSection();
 			dispatchProps.trackAction( section, action, stateProps.isStaticHomePage );
 		},
+		trackAction: ( section, action ) =>
+			dispatchProps.trackAction( section, action, stateProps.isStaticHomePage ),
 	} )
 );
 
