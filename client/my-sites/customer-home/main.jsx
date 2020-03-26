@@ -30,7 +30,6 @@ import getSiteChecklist from 'state/selectors/get-site-checklist';
 import isSiteChecklistComplete from 'state/selectors/is-site-checklist-complete';
 import QuerySiteChecklist from 'components/data/query-site-checklist';
 import withTrackingTool from 'lib/analytics/with-tracking-tool';
-import { localizeUrl } from 'lib/i18n-utils';
 import { launchSiteOrRedirectToLaunchSignupFlow } from 'state/sites/launch/actions';
 import { bumpStat, composeAnalytics, recordTracksEvent } from 'state/analytics/actions';
 import { expandMySitesSidebarSection as expandSection } from 'state/my-sites/sidebar/actions';
@@ -46,16 +45,12 @@ import QueryHomeLayout from 'components/data/query-home-layout';
 import { getHomeLayout } from 'state/selectors/get-home-layout';
 import Primary from 'my-sites/customer-home/locations/primary';
 import Notices from 'my-sites/customer-home/locations/notices';
+import Support from 'my-sites/customer-home/cards/features/support';
 
 /**
  * Style dependencies
  */
 import './style.scss';
-
-/**
- * Image dependencies
- */
-import happinessIllustration from 'assets/images/customer-home/happiness.png';
 
 class Home extends Component {
 	static propTypes = {
@@ -165,7 +160,6 @@ class Home extends Component {
 			translate,
 			checklistMode,
 			siteSlug,
-			trackAction,
 			expandToolsAndTrack,
 			hasChecklistData,
 			siteIsUnlaunched,
@@ -229,31 +223,7 @@ class Home extends Component {
 							</VerticalNav>
 						</Card>
 					) }
-					<Card>
-						<CardHeading>{ translate( 'Support' ) }</CardHeading>
-						<h6 className="customer-home__card-subheader">
-							{ translate( 'Get all the help you need' ) }
-						</h6>
-						<div className="customer-home__card-support">
-							<img src={ happinessIllustration } alt={ translate( 'Support' ) } />
-							<VerticalNav className="customer-home__card-links">
-								<VerticalNavItem
-									path={ localizeUrl( 'https://en.support.wordpress.com' ) }
-									external
-									onClick={ () => trackAction( 'support', 'docs' ) }
-								>
-									{ translate( 'Support articles' ) }
-								</VerticalNavItem>
-								<VerticalNavItem
-									path="/help/contact"
-									external
-									onClick={ () => trackAction( 'support', 'contact' ) }
-								>
-									{ translate( 'Contact us' ) }
-								</VerticalNavItem>
-							</VerticalNav>
-						</div>
-					</Card>
+					<Support />
 					{ // "Go Mobile" has the lowest priority placement when viewed in bigger viewports.
 					! isMobile() && <GoMobile /> }
 				</div>
@@ -313,8 +283,6 @@ const connectHome = connect(
 			dispatchProps.expandToolsSection();
 			dispatchProps.trackAction( section, action, stateProps.isStaticHomePage );
 		},
-		trackAction: ( section, action ) =>
-			dispatchProps.trackAction( section, action, stateProps.isStaticHomePage ),
 	} )
 );
 
