@@ -35,7 +35,7 @@ import {
 import {
 	isFreeJetpackPlan,
 	isFreePlan,
-	isJetpackBackup,
+	isJetpackProduct,
 	getJetpackProductDisplayName,
 	getJetpackProductTagline,
 } from 'lib/products-values';
@@ -67,7 +67,7 @@ class PurchasesListing extends Component {
 	isFreePlan( purchase ) {
 		const { currentPlan } = this.props;
 
-		if ( purchase && isJetpackBackup( purchase ) ) {
+		if ( purchase && isJetpackProduct( purchase ) ) {
 			return false;
 		}
 
@@ -84,9 +84,9 @@ class PurchasesListing extends Component {
 		return moment( product.expiryDate ) < moment().add( 30, 'days' );
 	}
 
-	getJetpackBackupPurchase() {
+	getJetpackProductPurchases() {
 		return (
-			find( this.props.purchases, purchase => purchase.active && isJetpackBackup( purchase ) ) ??
+			find( this.props.purchases, purchase => purchase.active && isJetpackProduct( purchase ) ) ??
 			null
 		);
 	}
@@ -94,7 +94,7 @@ class PurchasesListing extends Component {
 	getTitle( purchase ) {
 		const { currentPlanSlug } = this.props;
 
-		if ( isJetpackBackup( purchase ) ) {
+		if ( isJetpackProduct( purchase ) ) {
 			return getJetpackProductDisplayName( purchase );
 		}
 
@@ -109,11 +109,11 @@ class PurchasesListing extends Component {
 	getTagline( purchase ) {
 		const { currentPlanSlug, translate } = this.props;
 
-		if ( isJetpackBackup( purchase ) ) {
+		if ( isJetpackProduct( purchase ) ) {
 			return getJetpackProductTagline( purchase );
 		}
 
-		const jetpackBackupPurchase = this.getJetpackBackupPurchase();
+		const jetpackBackupPurchase = this.getJetpackProductPurchases();
 
 		if ( currentPlanSlug ) {
 			const planObject = getPlan( currentPlanSlug );
@@ -179,13 +179,13 @@ class PurchasesListing extends Component {
 		}
 
 		// For plans, show action button only to the site owners.
-		if ( ! isJetpackBackup( purchase ) && ! purchase.userIsOwner ) {
+		if ( ! isJetpackProduct( purchase ) && ! purchase.userIsOwner ) {
 			return null;
 		}
 
 		let label = translate( 'Manage plan' );
 
-		if ( isJetpackBackup( purchase ) ) {
+		if ( isJetpackProduct( purchase ) ) {
 			label = translate( 'Manage product' );
 		}
 
@@ -228,7 +228,7 @@ class PurchasesListing extends Component {
 		const { translate } = this.props;
 
 		// Get all products and filter out falsy items.
-		const productPurchases = [ this.getJetpackBackupPurchase() ].filter( Boolean );
+		const productPurchases = [ this.getJetpackProductPurchases() ].filter( Boolean );
 
 		if ( isEmpty( productPurchases ) ) {
 			return null;
