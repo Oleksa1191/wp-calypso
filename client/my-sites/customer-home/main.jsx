@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import { flowRight } from 'lodash';
-import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -35,7 +34,6 @@ import { launchSiteOrRedirectToLaunchSignupFlow } from 'state/sites/launch/actio
 import { bumpStat, composeAnalytics, recordTracksEvent } from 'state/analytics/actions';
 import { expandMySitesSidebarSection as expandSection } from 'state/my-sites/sidebar/actions';
 import isAtomicSite from 'state/selectors/is-site-automated-transfer';
-import StatsBanners from 'my-sites/stats/stats-banners';
 import isUnlaunchedSite from 'state/selectors/is-unlaunched-site';
 import { getCurrentUser, isCurrentUserEmailVerified } from 'state/current-user/selectors';
 import GoMobile from 'my-sites/customer-home/cards/features/go-mobile';
@@ -46,6 +44,7 @@ import QueryHomeLayout from 'components/data/query-home-layout';
 import { getHomeLayout } from 'state/selectors/get-home-layout';
 import Primary from 'my-sites/customer-home/locations/primary';
 import Notices from 'my-sites/customer-home/locations/notices';
+import Upsells from 'my-sites/customer-home/locations/upsells';
 
 /**
  * Style dependencies
@@ -112,16 +111,7 @@ class Home extends Component {
 	}
 
 	render() {
-		const {
-			checklistMode,
-			translate,
-			canUserUseCustomerHome,
-			siteSlug,
-			siteId,
-			isChecklistComplete,
-			siteIsUnlaunched,
-			isEstablishedSite,
-		} = this.props;
+		const { checklistMode, translate, canUserUseCustomerHome, siteId } = this.props;
 
 		if ( ! canUserUseCustomerHome ) {
 			const title = translate( 'This page is not available on this site.' );
@@ -142,16 +132,7 @@ class Home extends Component {
 				<SidebarNavigation />
 				<div className="customer-home__page-heading">{ this.renderCustomerHomeHeader() }</div>
 				<Notices checklistMode={ checklistMode } />
-				{ //Only show upgrade nudges to sites > 2 days old
-				isEstablishedSite && (
-					<div className="customer-home__upsells">
-						<StatsBanners
-							siteId={ siteId }
-							slug={ siteSlug }
-							primaryButton={ isChecklistComplete && ! siteIsUnlaunched ? true : false }
-						/>
-					</div>
-				) }
+				<Upsells />
 				{ this.renderCustomerHome() }
 			</Main>
 		);
@@ -269,7 +250,6 @@ const connectHome = connect(
 		const hasChecklistData = null !== siteChecklist && Array.isArray( siteChecklist.tasks );
 		const isAtomic = isAtomicSite( state, siteId );
 		const isChecklistComplete = isSiteChecklistComplete( state, siteId );
-		const createdAt = getSiteOption( state, siteId, 'created_at' );
 		const user = getCurrentUser( state );
 		const isClassicEditor = getSelectedEditor( state, siteId ) === 'classic';
 
@@ -284,7 +264,6 @@ const connectHome = connect(
 			needsEmailVerification: ! isCurrentUserEmailVerified( state ),
 			isStaticHomePage:
 				! isClassicEditor && 'page' === getSiteOption( state, siteId, 'show_on_front' ),
-			isEstablishedSite: moment().isAfter( moment( createdAt ).add( 2, 'days' ) ),
 			siteIsUnlaunched: isUnlaunchedSite( state, siteId ),
 			user,
 			cards: getHomeLayout( state, siteId ),
